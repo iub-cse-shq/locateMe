@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Booktstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/CSS/style.css">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    
+    <script>
+    var person = {
+        accessToken: 0,
+        fid: 0,
+        name: '',
+        long: 0,
+        lat: 0, 
+    };
+    </script>
+    
+    <script src="/JS/navbar.js"> </script>
+    <script src="/JS/facebook.js"> </script>
+    <script src="/JS/map.js"> </script>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/Images/earthico.ico" />
+
+
+    <title>Locator!</title>
+
+</head>
+
+
+<body>
+
+    <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top" style="background-color: #e3f2fd;">
+
+        <a class="navbar-brand" href="#"><img src="/Images/earth-globe.svg" width=32px> Locator!</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <!--<li class="nav-item active">-->
+                <!--  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+                <!--</li-->
+                <!--<li class="nav-item active">-->
+                <!--  <a class="nav-link" href="#">Features</a>-->
+                <!--</li>-->
+            </ul>
+
+            <form class="form-inline pull-xs-right">
+                
+                
+                <button id="share" type="button" class="btn btn-info btn-md" title="Share Location" onclick="openan(event)">
+                    <i class="material-icons">send</i>
+                </button>
+                
+                
+                
+                <button id="loginbtn" class="btn btn-outline-success btn-md" type="button">Log In</button>
+                 
+                <div id="logged-in" style="display: none">
+                    <button id="Group" type="Button" class="btn btn-info btn-md" title="Show Groups" onclick="openGrpOvrly(event)">
+                        <i class="material-icons">group</i>
+                    </button>
+                    <img id="pp" src="" height="32px" />
+                    <button id="logoutbtn" class="btn btn-outline-success btn-md" type="button" onclick="FB.logout()">Log Out</button>
+                </div>
+
+            </form>
+        </div>
+
+    </nav>
+
+    <div id="map"></div>
+
+    <!-- The Share Anonumous OverLay -->
+    <div id="myNav" class="overlay">
+
+        <!-- Button to close the overlay navigation -->
+        <a href="javascript:void(0)" class="closebtn btn btn-danger" onclick="closean(event)">&times;</a>
+
+        <!-- Overlay content -->
+        <div class="overlay-content">
+            <label style="color: white">Link below</label>
+            <input type="text" id="shareLink" style="width: 100%">
+            <!--<a id="shareButton" href="#">Share Anonymously !</a>-->
+            <Button id="shareButton" class="btn btn-primary" type="button" style="margin-top:5px;">Copy Share Code</Button>
+        </div>
+
+    </div>
+    
+    <!--Group View Overlay-->
+     <div id="groupOverlay" class="overlay">
+                <a href="javascript:void(0)" class="closebtn btn btn-danger" onclick="closeGrpOvrly(event)">&times;</a>
+                
+        <div class="overlay-content">
+                    <!--<div class="container-fluid text-center">-->
+                    <!--      <h3 style="color:white;" >DashBoard</h3>-->
+                    <!--</div>-->
+             
+            <div class="container-fluid ">
+                   
+                <!--   Group    -->
+                        
+            
+                <!--     Heading and add button       -->
+                          
+                <div class="row">
+                              
+                  <div class="col-md-8">
+                      <h3 style="color:white;" class="text-center" color= >My Groups</h3>
+                  </div>
+                                
+                  <div class="col-md-2">
+                    <button id="addGroup" style="background-color:rgb(30, 31, 33);" type="submit" class="btn btn-primary" onclick="showAddGroup(event)">
+                          <i class="fa fa-users" aria-hidden="true"></i> Add Group
+                    </button>
+                  </div>
+                  <div class="col-md-2">
+                    <button id="joinGroup" style="background:rgb(30, 31, 33);" type="submit" class="btn btn-primary" onclick="addGroup(event)">
+                          <i class="fa fa-users" aria-hidden="true"></i> Join Group
+                    </button>
+                  </div>
+              </div>
+                
+                                                                 
+                 
+                    <!--     Heading and add button       -->
+                    <!--     Group Table       -->
+                           
+                    <div id="groupList" class="">
+                             
+                    <table class="table">
+                      
+                      <thead class="thead-inverse">
+                       <tr>
+                              <th>#</th>
+                              <th>Group Name</th>
+                              <th>View</th>
+                        </tr>
+                      </thead>
+                      
+                      <tbody id='groupTable'>
+                          <!--<tr>-->
+                          <!--  <th scope="row">1</th>-->
+                          <!--  <td>Friends</td>-->
+                          <!--  <td><button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-facebook" aria-hidden="true"></i>View Group</button></td>-->
+                          <!--</tr>-->
+                          
+                          <!--<tr>-->
+                          <!--  <th scope="row">2</th>-->
+                          <!--  <td>Family</td>-->
+                          <!--  <td><button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-facebook" aria-hidden="true"></i>View Group</button></td>-->
+                          <!--</tr>-->
+                          
+                          <!--<tr>-->
+                          <!--  <th scope="row">3</th>-->
+                          <!--  <td>Stalk List</td>-->
+                          <!--  <td><button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-facebook" aria-hidden="true"></i>View Group</button></td>-->
+                          <!--</tr>-->
+                      </tbody>
+                    
+                    </table>
+                       <!--     Group Table       -->
+                    </div>
+                      <!--Create group overlay-->
+                      <div id="groupForm" style="display:none" class="mt-1">
+                        <form>
+                          <div class="form-group">
+                            <!--<label for="groupName" style="color:white">Group Name</label>-->
+                            <input type="text" class="form-control" id="groupName" placeholder="Enter group name">
+                          </div>
+                          <!--<div class="form-group">-->
+                            <!--<label for="groupPassword" style="color:white">Password</label>-->
+                          <!--  <input type="password" class="form-control" id="groupPassword" placeholder="Password (optional)">-->
+                          <!--</div>-->
+                          <button id="cancelButtonGroup" type="button" class = "btn btn-danger" onclick="cancelCreateGroup(event)">Cancel</button>
+                          <button id="CreateNewGroup" type="button" class="btn btn-primary" onclick="">Create New Group</button>
+                        </form>
+                    
+                    </div>                                          
+                    <!--Create group overlay-->
+                    
+                    <!--Join group overlay-->
+                    <div id="joinGroupForm" style="display:none" class="mt-1">
+                        <form>
+                          <div class="form-group">
+                            <!--<label for="groupName" style="color:white">Group Name</label>-->
+                            <input type="text" class="form-control" id="joinLink" placeholder="Enter Invite Code">
+                          </div>
+                          <button id="cancelButtonGroup" type="button" class = "btn btn-danger" onclick="cancelCreateGroup(event)">Cancel</button>
+                          <button id="JoinNewGroup" type="button" class="btn btn-primary" onclick="">Join Group</button>
+                          <div id="join-error" style="color: white">
+                          </div>
+                        </form>
+                                                                                     
+                    </div>
+                    <!--Join group overlay-->
+                </div>
+            </div>
+        
+        </div>
+
+
+    <footer class="footer fixed-bottom">
+
+        <div class="container-fluid">
+            
+            <div class="row">
+                <div class="col-sm">
+                    <button id="LockGPSBtn" type="button" class="btn btn-success" onclick="lockGPS(event)" title="Lock GPS"> 
+                        <i class="material-icons">gps_fixed</i>
+                    </button>
+                </div>
+           </div>
+           
+            <!--<button id="LockGPSBtn" type="button" class="btn btn-success" title="Lock GPS"> -->
+            <!--    <i class="material-icons">gps_fixed</i>-->
+            <!--</button>-->
+              
+        </div>
+    </footer>
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMcCpQD49UcLD5TwjXSjsY3k4QzduPXlE&callback=initMap" async defer></script>
+    
+    <script src="/JS/share.js"> </script>
+    <script src="/JS/group.js"> </script>
+    
+    
+    
+    
+</body>
+
+</html>

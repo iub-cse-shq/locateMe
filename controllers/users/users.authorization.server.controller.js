@@ -27,12 +27,13 @@ exports.userByID = function(req, res, next, id) {
  * Require login routing middleware
  */
 exports.requiresLogin = function(req, res, next) {
-		if (!req.isAuthenticated()) {
+		// if (!req.isAuthenticated()) {
+	if (!req.body.accessToken && req.accessToken != 0) {
 		return res.status(401).send({
 			message: 'User is not logged in'
 		});
 	}
-
+	delete req.body.accessToken;
 	next();
 };
 

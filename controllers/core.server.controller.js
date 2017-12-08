@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 exports.index = function(req, res) {
-	res.render('./../public/views/index2.ejs', {
+	res.render('./../public/views/Homepage.ejs', {
 		user: req.user || null,
 		request: req
 	});

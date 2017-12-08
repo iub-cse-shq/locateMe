@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
-var Article = require('./../models/Article.js');
+var Person = require('./../models/Person.js');
+var Group = require('./../models/Group.js');
 var errorHandler = require('./errors.server.controller');
 var _ = require('lodash');
 
 module.exports.list = function(req, res) {
-  Article.find(function(err, data) {
+  Person.find(function(err, data) {
     if (err) {
       return res.status(400).send({
 
@@ -19,9 +20,9 @@ module.exports.list = function(req, res) {
 };
 
 module.exports.create = function(req, res) {
-  var article = new Article(req.body);
-  article.user = req.user;
-  article.save(function(err, data) {
+  console.log(req.body);
+  var person = new Person(req.body);
+  person.save(function(err, data) {
     if (err) {
       return res.status(400).send({
 
@@ -34,41 +35,48 @@ module.exports.create = function(req, res) {
 };
 
 module.exports.read = function(req, res) {
-  res.json(req.article);
+  res.json(req.person);
 };
 
 
 exports.delete = function(req, res) {
-	var article = req.article;
-	article.remove(function(err) {
+	var person = req.person;
+	person.remove(function(err) {
 		if (err) {
 			return res.status(400).send();
 		} else {
-			res.json(article);
+			res.json(person);
 		}
 	});
 };
 
 
 module.exports.update = function(req, res) {
-  var article = req.article;
+    var person = req.person;
 
-  	article = _.extend(article, req.body);
+  	person = _.extend(person, req.body);
 
-  	article.save(function(err) {
+  	person.save(function(err) {
   		if (err) {
   			return res.status(400).send();
   		} else {
-  			res.json(article);
+  			res.json(person);
   		}
   	});
 };
 
-exports.articleByID = function(req, res, next, id) {
-	Article.findById(id).populate('user', 'email').exec(function(err, article) {
+exports.personByID = function(req, res, next, id) {
+    console.log(id);
+// 	Person.findById(id)
+    id = String(id);
+    Person.findOne({'fid': id})
+          .populate('groups')
+          // .populate('persons')
+	     // .populate('user', 'email')
+	      .exec(function(err, person) {
 		if (err) return next(err);
-		if (!article) return next(new Error('Failed to load article ' + id));
-		req.article = article;
+		if (!person) return next(new Error('Failed to load person ' + id));
+		req.person = person;
 		next();
 	});
 };
