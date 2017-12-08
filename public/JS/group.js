@@ -1,8 +1,26 @@
+
+
 function copyLink(i){
     var e = $('#group-link-'+i).show().select();
     document.execCommand("copy");
     e.hide();
     console.log('copied to clipboard!');
+}
+
+function createGroupTable(){
+    // adding group rows
+    var rows = '';
+    $.each(person.groups, function(i,g){
+        rows += '<tr>'+
+                '<th scope="row">'+(i+1)+'</th>'+
+                '<td>'+g.name+'</td>'+
+                '<td>'+
+                '<button type="button" class="btn btn-info mr-1" onclick="copyLink('+i+')"><i class="fa fa-clipboard" aria-hidden="true"></i>Copy Invite Code</button>'+
+                '<input style="display:none" type="text" id="group-link-'+i+'" value="'+g._id+'" >'+
+                '<button type="button" class="btn btn-primary" onclick="viewGroup('+i+')"><i class="fa fa-eye" aria-hidden="true"></i>View Group</button></td>'+
+                '</tr>';
+    });
+    $('#groupTable').html(rows);
 }
 
 function viewGroup(i){
@@ -48,6 +66,7 @@ function viewGroup(i){
         // map.setCenter({lat: aLat/n, lng: aLong/n});
         map.setCenter({lat: person.lat, lng: person.long});
         map.setZoom(12);
+        closeGrpOvrly();
         
     }).fail(function(res){
         console.log(res);
@@ -70,10 +89,16 @@ $('#CreateNewGroup').click(function(){
         console.log(res);
         person.groups.push(res);
         console.log("Group created!");
+        alert("Group Created. Share Invite Link");
+        closeGrpOvrly();
+        $('#groupForm').hide();
+        
+        createGroupTable();
     }).fail(function(res){
         console.log(res);
         console.log("Group failed!");
-    }); 
+        alert("Group Creation Failed. Try Again Later!");
+    });
 });
 
 $('#JoinNewGroup').click(function(){
@@ -90,7 +115,17 @@ $('#JoinNewGroup').click(function(){
     }).done(function(res){
         console.log(res);
         person.groups.push(res);
+        
         console.log("Group joined!");
+        createGroupTable();
+        
+        
+        //i will fix it. wait. 
+        //okkk
+        
+        closeGrpOvrly();
+        
+        
     }).fail(function(res){
         console.log(res);
         console.log("Group join failed!");

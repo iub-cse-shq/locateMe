@@ -91,3 +91,14 @@
 #groupList{
     background-color: white;
 }
+
+/*Group Table*/
+#gName{
+    padding-left:6%;
+}
+#gAction{
+    padding-left:30%;
+}
+#join-error {
+    color: white;
+}

@@ -1,3 +1,21 @@
+function updatePerson() {
+ $.ajax({
+  method: "PUT",
+  url: "/api/persons/edit/" + person.fid,
+  data: {
+   accessToken: person.accessToken,
+   fid: person.fid,
+   long: person.long,
+   lat: person.lat
+  }
+ }).done(function(res) {
+  console.log("Person location updated");
+ }).fail(function(res) {
+  console.log(res);
+  console.log("Person location update failed");
+ });
+}
+
 function checkLogin() {
  FB.getLoginStatus(function(response) {
   if (response.status != 'connected') {
@@ -25,8 +43,8 @@ function checkLogin() {
      console.log(res);
      person._id = res._id;
      person.groups = res.groups;
-     if(person.long == 0) person.long = res.long;
-     if(person.lat == 0) person.lat = res.lat;
+     if (person.long == 0) person.long = res.long;
+     if (person.lat == 0) person.lat = res.lat;
      console.log('Person found!');
 
      $.ajax({
@@ -51,7 +69,7 @@ function checkLogin() {
      // failed. create person
      console.log("creating person!");
      console.log(person);
-     
+
      $.ajax({
       method: "POST",
       url: "/api/persons/",

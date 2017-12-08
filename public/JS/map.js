@@ -84,6 +84,7 @@ function SetMarkerAndLocation()
             
             person.long = pos.lng;
             person.lat = pos.lat;
+            updatePerson();
             //infoWindow.setPosition(pos);
     
             //infoWindow.setContent("Your Position");
