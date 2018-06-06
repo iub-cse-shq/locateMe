@@ -39,26 +39,31 @@ function viewGroup(i){
         initMap();
         $.each(group.persons, function(i,p){
             console.log(p);
-            FB.api(
-                "/"+p.fid+"/picture?type=small",
-                function (response) {
-                  if (response && !response.error) {
-                    var image = response.data.url;
-                    console.log(response);
-                    var marker = new google.maps.Marker({
-                        position: {lng: p.long, lat: p.lat},
-                        map: map,
-                        title: p.name,
-                        animation: google.maps.Animation.DROP,
-                        icon: image
-                    });
-                    
-                    // aLat += p.lat*1;
-                    // aLong += p.long*1;
-                    // n++;
-                  }
-                }
-            );
+            //FB.api(
+                // "/"+p.fid+"/picture?type=small",
+                // function (response) {
+                //   if (response && !response.error) {
+                //     var image = response.data.url;
+                //     console.log(response);
+                //     var marker = new google.maps.Marker({
+                //         position: {lng: p.long, lat: p.lat},
+                //         map: map,
+                //         title: p.name,
+                //         icon: image
+                //     });
+                //     console.log(p+" marker rendered.");
+                //     // aLat += p.lat*1;
+                //     // aLong += p.long*1;
+                //     // n++;
+                //   }
+                // }
+            var img = "https://graph.facebook.com/"+p.fid+"/picture?type=small";
+            var marker = new google.maps.Marker({
+                position: {lng: p.long, lat: p.lat},
+                map: map,
+                title: p.name,
+                icon: img
+            });
             
         });
         
