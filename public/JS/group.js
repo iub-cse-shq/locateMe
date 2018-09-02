@@ -1,5 +1,4 @@
 
-
 function copyLink(i){
     var id = $('#group-link-'+i).val();
     var link = $('#group-link-'+i).val('https://locate-me-webapp-a1522435.c9users.io/join/'+id);
@@ -25,7 +24,7 @@ function createGroupTable(){
     });
     $('#groupTable').html(rows);
 }
-
+var gid;
 function viewGroup(i){
 
     $.ajax({
@@ -38,29 +37,13 @@ function viewGroup(i){
         // var aLat = 0;
         // var aLong = 0;
         // var n = 0;
+        gid = person.groups[i]._id;
+        console.log(gid);
         var group = res;
         console.log(res);
         initMap();
         $.each(group.persons, function(i,p){
             console.log(p);
-            //FB.api(
-                // "/"+p.fid+"/picture?type=small",
-                // function (response) {
-                //   if (response && !response.error) {
-                //     var image = response.data.url;
-                //     console.log(response);
-                //     var marker = new google.maps.Marker({
-                //         position: {lng: p.long, lat: p.lat},
-                //         map: map,
-                //         title: p.name,
-                //         icon: image
-                //     });
-                //     console.log(p+" marker rendered.");
-                //     // aLat += p.lat*1;
-                //     // aLong += p.long*1;
-                //     // n++;
-                //   }
-                // }
             var img = "https://graph.facebook.com/"+p.fid+"/picture?type=small";
             var marker = new google.maps.Marker({
                 position: {lng: p.long, lat: p.lat},
@@ -82,7 +65,11 @@ function viewGroup(i){
         console.log("Group fetch failed!");
     });
     
+
+ 
 }
+
+
 
 $('#CreateNewGroup').click(function(){
    $.ajax({
@@ -92,7 +79,6 @@ $('#CreateNewGroup').click(function(){
             accessToken: person.accessToken,
             persons: [person._id],
             name: $('#groupName').val(),
-            // pass: $('#groupPassword').val()
         }
     }).done(function(res){
         console.log(res);
@@ -135,14 +121,8 @@ $('#JoinNewGroup').click(function(){
         alert("Group Join");
         console.log("Group joined!");
         createGroupTable();
-        
-        
-        //i will fix it. wait. 
-        //okkk
-        
         closeGrpOvrly();
-        
-        
+
     }).fail(function(res){
         console.log(res);
         console.log("Group join failed!");

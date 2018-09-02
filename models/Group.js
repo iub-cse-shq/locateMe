@@ -7,18 +7,13 @@ var GroupSchema = {
     trim: true,
     required: 'Name required',
   },
-      tolong: {
+  tolong: {
     type: Number,
     default: ''
   },
   
   tolat: {
     type: Number,
-    default: ''
-  },
-  
-  tolong: {
-    type:Number,
     default: ''
   },
   

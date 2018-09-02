@@ -1,6 +1,9 @@
 /* global initmap() */
 /* global SetMarkerAndLocation() */
-
+/* global group.tolat  */
+/* global group.tolong*/
+/* global group.destination */
+var group=0;
 var map, infoWindow,infoWindowTo,infoWindow2, infoWindow3,destinationAdresss,FromAddress,originAddress,to_address,origin,destination,directionsService,directionsDisplay,distance_in_kilo,distance_in_mile,duration_text;
 var pos, pos2, pos3,dpos;
 var marker, marker2, marker3,destinationmarker;
@@ -86,7 +89,7 @@ directionsDisplay.setOptions({
     infowindowRoute = new google.maps.InfoWindow();
     
     //var searchBox = new google.maps.places.Autocomplete(document.getElementById('Search-input'));
-  
+     
     
   
     
@@ -120,6 +123,7 @@ function SetMarkerAndLocation()
             google.maps.event.addListener(to_places, 'place_changed', function () {
       
                 var to_place = to_places.getPlace();
+                group.destination = to_place;
                 var to_address = to_place.formatted_address;
                 $('#destination').val(to_address);
                  console.log(to_place);
@@ -135,11 +139,12 @@ function SetMarkerAndLocation()
            
              Desgeometrylat = response.data.results[0].geometry.location.lat;
              Desgeometrylng = response.data.results[0].geometry.location.lng;
-             //console.log("ami _"+typeof(Desgeometrylat));
-              person.tolat = Desgeometrylat;
-              person.tolong = Desgeometrylng;
+             group.tolat = Desgeometrylat;
+             group.tolong= Desgeometrylng; 
+             person.tolat = Desgeometrylat;
+             person.tolong = Desgeometrylng;
          
-              //console.log("tmi _"+typeof( person.tolong));
+            
              console.log(Desgeometrylat);
              console.log(Desgeometrylng);
                dpos = {
@@ -250,8 +255,8 @@ function SetMarkerAndLocation()
                     var distance = response.rows[0].elements[0].distance;
                     var duration = response.rows[0].elements[0].duration;
                     console.log(response.rows[0].elements[0].distance);
-                     distance_in_kilo = distance.value / 1000; // the kilom
-                     distance_in_mile = distance.value / 1609.34; // the mile
+                     distance_in_kilo = distance.value/1000; // the kilom
+                     distance_in_mile = distance.value/1609.34; // the mile
                      duration_text = duration.text;
                     var duration_value = duration.value;
                     console.log("duration : "+duration_text);
