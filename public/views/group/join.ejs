@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Booktstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/CSS/style.css">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    
+    <script>
+    var person = {
+        accessToken: 0,
+        fid: 0,
+        name: '',
+        long: 0,
+        lat: 0, 
+    };
+    </script>
+    <script src="/JS/join.js"> </script>
+    <script src="/JS/navbar.js"> </script>
+    <script src="/JS/facebook.js"> </script>
+    <script src="/JS/map.js"> </script>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/Images/earthico.ico" />
+
+
+    <title>LocateMe!</title>
+
+</head>
+
+
+<body>
+    
+ <!--Navbar Start-->
+    <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top" style="background-color: #e3f2fd;">
+
+        <a class="navbar-brand" href="/"><img src="/Images/earth-globe.svg" width=32px> LocateMe!</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <!--<li class="nav-item active">-->
+                <!--  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+                <!--</li-->
+                <!--<li class="nav-item active">-->
+                <!--  <a class="nav-link" href="#">Features</a>-->
+                <!--</li>-->
+                
+            </ul>
+        </div>
+
+    </nav>
+    <!--Navbar End-->
+
+
+
+
+    <!-- Map UI Code-->
+          
+     <!--<div id="map"> </div>-->
+     
+    <!--end -->
+ <div class="jumbotron">
+  <h1 class="display-4 pt-2">Welcome To LocateMe!</h1>
+  <p class="lead">You need to login to join a Group</p>
+  <hr class="my-4">
+    <button id="loginbtn" class="btn btn-outline-primary btn-md" type="button"><i class="fa fa-facebook-f"></i> Login with Facebook</button>
+  <p class="lead">
+   
+  </p>
+</div>
+
+ 
+
+ 
+    
+
+
+
+
+    <!--all script start-->
+                <!--CDN External Script-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMcCpQD49UcLD5TwjXSjsY3k4QzduPXlE&libraries=geometry,places&callback=initMap" async defer></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCD8nFTdvFh4JlrOP5I6WvVZJyZoop8INU&libraries=places"></script>-->
+                <!--Internal Script-->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/JS/share.js"> </script>
+    <script src="/JS/group.js"> </script>
+     <script src="/JS/map.js"> </script>
+     
+     <script>
+     
+  
+    
+         
+         
+         
+     </script>
+    
+    
+    <!--all script start-->
+    
+</body>
+
+</html>

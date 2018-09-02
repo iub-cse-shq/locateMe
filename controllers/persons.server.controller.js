@@ -53,9 +53,9 @@ exports.delete = function(req, res) {
 
 module.exports.update = function(req, res) {
     var person = req.person;
-
+    console.log(person);
   	person = _.extend(person, req.body);
-
+     console.log("put api called");
   	person.save(function(err) {
   		if (err) {
   			return res.status(400).send();

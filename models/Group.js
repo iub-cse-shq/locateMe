@@ -7,6 +7,26 @@ var GroupSchema = {
     trim: true,
     required: 'Name required',
   },
+      tolong: {
+    type: Number,
+    default: ''
+  },
+  
+  tolat: {
+    type: Number,
+    default: ''
+  },
+  
+  tolong: {
+    type:Number,
+    default: ''
+  },
+  
+   destination: {
+    type:String,
+    default: ''
+  },
+  
   
   // pass: {
   //   type: String,
@@ -19,7 +39,7 @@ var GroupSchema = {
     type: Date,
     default: Date.now
   }
-}
+} 
 
 var Group = mongoose.model('Group', GroupSchema, 'groups');
 module.exports = Group;

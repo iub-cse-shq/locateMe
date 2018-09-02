@@ -1,3 +1,12 @@
+
+#searchbox{
+    display:block;
+    text-align:center;
+    margin-right:10px;
+}
+#Search-input{
+    width:400px;
+}
 #map {
     display: block;
     position:absolute;
@@ -102,3 +111,5 @@
 #join-error {
     color: white;
 }
+
+ 

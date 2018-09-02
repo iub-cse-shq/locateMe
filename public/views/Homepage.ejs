@@ -37,10 +37,11 @@
 
 
 <body>
-
+    
+ <!--Navbar Start-->
     <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top" style="background-color: #e3f2fd;">
 
-        <a class="navbar-brand" href="#"><img src="/Images/earth-globe.svg" width=32px> LocateMe!</a>
+        <a class="navbar-brand" href="/"><img src="/Images/earth-globe.svg" width=32px> LocateMe!</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -53,17 +54,20 @@
                 <!--<li class="nav-item active">-->
                 <!--  <a class="nav-link" href="#">Features</a>-->
                 <!--</li>-->
+                
             </ul>
-
+           <!-- Search Location-->
             <form class="form-inline pull-xs-right">
-                
-                
+                    <div id="searchbox" class="form-group">
+                            <input id="Search-input" type="text" class="form-control" placeholder="Where To">
+                             <input id="destination" type="hidden" name="destination" required/>
+                             <input id="origin" type="hidden" name="origin" required/>
+                       </div>
+                <!---end---> 
                 <button id="share" type="button" class="btn btn-info btn-md" title="Share Location" onclick="openan(event)">
-                    <i class="material-icons">send</i>
+                    <i class="fa fa-share"></i>
                 </button>
-                
-                
-                
+
                 <button id="loginbtn" class="btn btn-outline-success btn-md" type="button">Log In</button>
                  
                 <div id="logged-in" style="display: none">
@@ -75,27 +79,44 @@
                 </div>
 
             </form>
+            
         </div>
 
     </nav>
+    <!--Navbar End-->
 
-    <div id="map"></div>
 
-    <!-- The Share Anonumous OverLay -->
-    <div id="myNav" class="overlay">
 
-        <!-- Button to close the overlay navigation -->
-        <a href="javascript:void(0)" class="closebtn btn btn-danger" onclick="closean(event)">&times;</a>
 
-        <!-- Overlay content -->
-        <div class="overlay-content">
-            <label style="color: white">Link below</label>
-            <input type="text" id="shareLink" style="width: 100%">
-            <!--<a id="shareButton" href="#">Share Anonymously !</a>-->
-            <Button id="shareButton" class="btn btn-primary" type="button" style="margin-top:5px;"><i class="fa fa-share-alt" aria-hidden="true"></i> Copy Share Code</Button>
-        </div>
+    <!-- Map UI Code-->
+          
+     <div id="map"> </div>
+     
+    <!--end -->
+ 
 
+
+     <!-- Anonoymouse Share link overplay Start Here-->
+     
+     <div id="myNav" class="overlay">
+    
+            <!-- Button to close the overlay navigation -->
+     <a href="javascript:void(0)" class="closebtn btn btn-danger" onclick="closean(event)">&times;</a>
+    
+            <!-- Overlay content -->
+     <div class="overlay-content">
+                <label style="color: white">Link below</label>
+                <input type="text" id="shareLink" style="width: 100%">
+                <!--<a id="shareButton" href="#">Share Anonymously !</a>-->
+         <Button id="shareButton" class="btn btn-primary" type="button" style="margin-top:5px;"><i class="fa fa-share-alt" aria-hidden="true"></i> Copy Share Code</Button>
+     </div>
+    
     </div>
+    
+    <!-- Anonoymouse Share link overplay end Here-->
+    
+    
+    
     
     <!--Group View Overlay-->
      <div id="groupOverlay" class="overlay">
@@ -115,16 +136,21 @@
                           
                 <div class="row">
                               
-                  <div class="col-md-6">
+                  <div class="col-md-3 col-sm-3">
                       <h3 style="color:white;" class="text-center" color= >My Groups</h3>
                   </div>
                                 
-                  <div class="col-md-2">
+                  <div class="col-md-3 col-sm-3">
                     <button id="addGroup" style="background-color:rgb(30, 31, 33);" type="submit" class="btn btn-primary" onclick="showAddGroup(event)">
-                          <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Group
+                          <i class="fa fa-plus-circle" aria-hidden="true"></i> Create Group
                     </button>
                   </div>
-                  <div class="col-md-4">
+                   <div class="col-md-3 col-sm-3">
+                    <button id="addGroup" style="background-color:rgb(30, 31, 33);" type="submit" class="btn btn-primary" onclick="allGrouplist(event)">
+                          <i class="fa fa-plus-circle" aria-hidden="true"></i> View All Group
+                    </button>
+                  </div>
+                  <div class="col-md-3 col-sm-3">
                     <button id="joinGroup" style="background:rgb(30, 31, 33);" type="submit" class="btn btn-primary" onclick="addGroup(event)">
                           <i class="fa fa-users" aria-hidden="true"></i> Join Group
                     </button>
@@ -203,20 +229,25 @@
                                                                                      
                     </div>
                     <div id="join-error">
-                          </div>
+                     </div>
                     <!--Join group overlay-->
                 </div>
             </div>
         
         </div>
 
+<!---Group view Overplay End here-->
 
-    <footer class="footer fixed-bottom">
+
+
+
+   <!--Lock Gps Button-->
+    <footer class="footer fixed-bottom  mb-2">
 
         <div class="container-fluid">
             
             <div class="row">
-                <div class="col-sm">
+                <div class="col-sm mb-2">
                     <button id="LockGPSBtn" type="button" class="btn btn-success" onclick="lockGPS(event)" title="Lock GPS"> 
                         <i class="material-icons">gps_fixed</i>
                     </button>
@@ -229,12 +260,14 @@
               
         </div>
     </footer>
+    <!--lock Gps Button end here-->
+    
 
 
 
 
-
-
+    <!--all script start-->
+                <!--CDN External Script-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     
     
@@ -244,14 +277,19 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMcCpQD49UcLD5TwjXSjsY3k4QzduPXlE&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMcCpQD49UcLD5TwjXSjsY3k4QzduPXlE&libraries=geometry,places&callback=initMap" async defer></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCD8nFTdvFh4JlrOP5I6WvVZJyZoop8INU&libraries=places"></script>-->
+                <!--Internal Script-->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+     <script src="/JS/share.js"> </script>
+     <script src="/JS/group.js"> </script>
+     <script src="/JS/map.js"> </script>
+     <script>
+         
+     </script>
     
-    <script src="/JS/share.js"> </script>
     
-    <script src="/JS/group.js"> </script>
-    
-    
-    
+    <!--all script start-->
     
 </body>
 

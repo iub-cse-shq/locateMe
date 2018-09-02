@@ -23,6 +23,9 @@ app.route('/api/groups/')
 app.route('/api/groups/join/:groupId')
     .post(users.requiresLogin, groups.join);
 
+app.route('/join/:groupId').get(groups.joinByLink); 
+    
+ 
 
 
 

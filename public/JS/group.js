@@ -1,10 +1,13 @@
 
 
 function copyLink(i){
+    var id = $('#group-link-'+i).val();
+    var link = $('#group-link-'+i).val('https://locate-me-webapp-a1522435.c9users.io/join/'+id);
     var e = $('#group-link-'+i).show().select();
     document.execCommand("copy");
     e.hide();
     console.log('copied to clipboard!');
+    
 }
 
 function createGroupTable(){
@@ -15,15 +18,16 @@ function createGroupTable(){
                 '<th scope="row">'+(i+1)+'</th>'+
                 '<td>'+g.name+'</td>'+
                 '<td>'+
-                '<button type="button" class="btn btn-info mr-1" onclick="copyLink('+i+')"><i class="fa fa-clipboard" aria-hidden="true"></i>Copy Invite Code</button>'+
+                '<button type="button" class="btn btn-info mr-1" onclick="copyLink('+i+')"><i class="fa fa-clipboard" aria-hidden="true"></i> Copy Invitation Link</button>'+
                 '<input style="display:none" type="text" id="group-link-'+i+'" value="'+g._id+'" >'+
-                '<button type="button" class="btn btn-primary" onclick="viewGroup('+i+')"><i class="fa fa-eye" aria-hidden="true"></i>View Group</button></td>'+
+                '<button type="button" class="btn btn-primary" onclick="viewGroup('+i+')"><i class="fa fa-eye" aria-hidden="true"></i> View Group</button></td>'+
                 '</tr>';
     });
     $('#groupTable').html(rows);
 }
 
 function viewGroup(i){
+
     $.ajax({
         method: "POST",
         url: "/api/groups/"+person.groups[i]._id,
@@ -95,7 +99,8 @@ $('#CreateNewGroup').click(function(){
         person.groups.push(res);
         console.log("Group created!");
         alert("Group Created. Share Invite Link");
-        closeGrpOvrly();
+        //closeGrpOvrly();
+         allGrouplist()
         $('#groupForm').hide();
         
         createGroupTable();
@@ -104,13 +109,20 @@ $('#CreateNewGroup').click(function(){
         console.log("Group failed!");
         alert("Group Creation Failed. Try Again Later!");
     });
+    
+    $('#groupName').val("");
 });
+
+ 
+
 
 $('#JoinNewGroup').click(function(){
     var link = $('#joinLink').val();
-    var id = link.substring(link.lastIndexOf('/')+1);
+     console.log("join link : "+ link);
+    console.log(link.lastIndexOf('/')+1);
+  var id = link.substring(link.lastIndexOf('/')+1);
     console.log(id);
-   $.ajax({
+  $.ajax({
         method: "POST",
         url: "/api/groups/join/"+id,
         data: {
@@ -120,7 +132,7 @@ $('#JoinNewGroup').click(function(){
     }).done(function(res){
         console.log(res);
         person.groups.push(res);
-        
+        alert("Group Join");
         console.log("Group joined!");
         createGroupTable();
         
@@ -137,3 +149,6 @@ $('#JoinNewGroup').click(function(){
         $('#join-error').text("Yikes! Cant join this group. Try another.");
     }); 
 });
+
+ 
+

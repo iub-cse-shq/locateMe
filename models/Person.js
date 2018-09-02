@@ -23,8 +23,40 @@ var PersonSchema = {
     type: Number,
     required: 'Latitude required'
   },
+    tolong: {
+    type: Number,
+    default: ''
+  },
+  
+  tolat: {
+    type: Number,
+    default: ''
+  },
+  
+  duration: {
+    type:String,
+    default: ''
+  },
+  
+   distance: {
+    type:Number,
+    default: ''
+  },
+   origin: {
+    type:String,
+    default: ''
+  },
+     destination: {
+    type:String,
+    default: ''
+  },
+  
+  
+  
   
   groups: [{ type: Schema.Types.ObjectId, ref: 'Group' }],
+    
+   
 
   created: {
     type: Date,

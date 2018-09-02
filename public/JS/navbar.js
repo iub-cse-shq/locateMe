@@ -5,7 +5,7 @@ function openan(event) {
     
     document.getElementById("LockGPSBtn").style.visibility = "hidden";
     // document.getElementById("LockGPSBtn").transitionDuration = "2s";
-   createShareLink();
+     createShareLink();
 }
 
 function closean(event) {
@@ -20,6 +20,7 @@ function openGrpOvrly(event) {
     document.getElementById("groupOverlay").style.width = "100%";
     //console.log("Overlay group Called" + " " + event.target.id);
     document.getElementById("LockGPSBtn").style.visibility = "hidden";
+    allGrouplist();
     
     createGroupTable();
 }
@@ -63,4 +64,11 @@ function cancelJoinGroup(event){
     //console.log("Cancel from Join Group Button Clicked.");
 }
 
+function allGrouplist(event){
+    
+    document.getElementById("groupForm").style.display = "none";
+    document.getElementById("joinGroupForm").style.display = "none";
+    document.getElementById("groupList").style.display = "block";
+    //console.log("Cancel from Join Group Button Clicked.");
+}
 

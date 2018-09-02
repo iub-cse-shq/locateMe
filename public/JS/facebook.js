@@ -1,4 +1,14 @@
+ 
+
 function updatePerson() {
+     
+     console.log(person.destination);
+     console.log(person.origin);
+     console.log(person.tolat);
+     console.log(person.tolong);
+//var durations = String(person.duration);
+//var distances = String(person.distance);
+//console.log("duration"+ durations);
  $.ajax({
   method: "PUT",
   url: "/api/persons/edit/" + person.fid,
@@ -6,10 +16,19 @@ function updatePerson() {
    accessToken: person.accessToken,
    fid: person.fid,
    long: person.long,
-   lat: person.lat
+   lat: person.lat,
+   tolong : person.tolong,
+   tolat : person.tolat,
+   duration:person.duration,
+   distance:person.distance,
+   origin:person.origin,
+   destination:person.destination
   }
  }).done(function(res) {
+    console.log("Person location updated");
+   
   console.log("Person location updated");
+  console.log(res);
  }).fail(function(res) {
   console.log(res);
   console.log("Person location update failed");
@@ -46,7 +65,9 @@ function checkLogin() {
      if (person.long == 0) person.long = res.long;
      if (person.lat == 0) person.lat = res.lat;
      console.log('Person found!');
-
+     
+     JoinNewGroupbyLink();
+     
      $.ajax({
       method: "PUT",
       url: "/api/persons/edit/" + person.fid,
@@ -54,7 +75,8 @@ function checkLogin() {
        accessToken: person.accessToken,
        fid: person.fid,
        long: person.long,
-       lat: person.lat
+       lat: person.lat,
+       
       }
      }).done(function(res) {
       console.log("Person location updated");
@@ -78,6 +100,7 @@ function checkLogin() {
       person._id = res._id;
       person.groups = res.groups;
       console.log("Person created!");
+      
      }).fail(function(res) {
       console.log(res.responseText);
      });
@@ -86,10 +109,11 @@ function checkLogin() {
 
   }
  });
+ 
 }
 window.fbAsyncInit = function() {
  FB.init({
-  appId: '2485169118373885',
+  appId: '1599683746807705',
   autoLogAppEvents: true,
   status: true,
   xfbml: true,
@@ -97,6 +121,7 @@ window.fbAsyncInit = function() {
  });
 
  console.log('fb ready')
+
 
  checkLogin();
  FB.Event.subscribe('auth.login', checkLogin);

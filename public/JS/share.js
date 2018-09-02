@@ -12,7 +12,7 @@ function createShareLink(){
     }).done(function(res){
         console.log(res);
         console.log("Share created!");
-        $('#shareLink').val('https://locate-me-shamahoque.c9users.io/shares/'+res._id);
+        $('#shareLink').val('https://locate-me-webapp-a1522435.c9users.io/shares/'+res._id);
     }).fail(function(res){
         console.log(res);
         console.log("Share failed!");

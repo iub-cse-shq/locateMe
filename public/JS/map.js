@@ -1,10 +1,12 @@
 /* global initmap() */
-/ global SetMarkerAndLocation() */
-var map, infoWindow, infoWindow2, infoWindow3;
-var pos, pos2, pos3;
-var marker, marker2, marker3;
+/* global SetMarkerAndLocation() */
 
-//Icon Hotplugging for different markers
+var map, infoWindow,infoWindowTo,infoWindow2, infoWindow3,destinationAdresss,FromAddress,originAddress,to_address,origin,destination,directionsService,directionsDisplay,distance_in_kilo,distance_in_mile,duration_text;
+var pos, pos2, pos3,dpos;
+var marker, marker2, marker3,destinationmarker;
+var infowindowRoute ;
+ var Desgeometrylat ;
+ var Desgeometrylng;
 var image = 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
 var image2 = 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
 var image3 = 'https://maps.google.com/mapfiles/ms/icons/purple-dot.png';
@@ -47,9 +49,16 @@ setPostionManually(23.809713, 90.430695, pos3);
 
 //initialize maps
 function initMap() {
+ 
+directionsDisplay = new google.maps.DirectionsRenderer();
+directionsDisplay.setOptions({
+  polylineOptions: {
+    strokeColor: '#4285F4'
+   
+  }
+});
 
-
-
+ 
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 23.9632, lng: 87.5399 },
@@ -60,6 +69,11 @@ function initMap() {
     infoWindow = new google.maps.InfoWindow({
     content: contentString
     });
+    
+     infoWindowTo = new google.maps.InfoWindow({
+    content: contentString
+    });
+    
     //infoWindow2 = new google.maps.InfoWindow;
     infoWindow2 = new google.maps.InfoWindow({
     content: contentString2
@@ -68,23 +82,204 @@ function initMap() {
     infoWindow3 = new google.maps.InfoWindow({
     content: contentString3
     });
+    
+    infowindowRoute = new google.maps.InfoWindow();
+    
+    //var searchBox = new google.maps.places.Autocomplete(document.getElementById('Search-input'));
+  
+    
+  
+    
 }
-
 
 function SetMarkerAndLocation()
 {
         // Try HTML5 geolocation.
-    
+
+         
         if (navigator.geolocation) {
+            //realTime Track Current location
+            var optn ={
+                enableHighAccuracy :true,
+                timeout : Infinity,
+                maximumAge:0
+            }
         navigator.geolocation.getCurrentPosition(function(position) {
             pos = {
                 lat: position.coords.latitude,
-                lng: position.coords.longitude
+                lng: position.coords.longitude 
             };
             
-            person.long = pos.lng;
-            person.lat = pos.lat;
-            updatePerson();
+           person.long = pos.lng;
+           person.lat = pos.lat;
+           
+        
+            // where to place seach information
+            var to_places = new google.maps.places.Autocomplete(document.getElementById('Search-input'));
+           // search box adress change this event execute
+            google.maps.event.addListener(to_places, 'place_changed', function () {
+      
+                var to_place = to_places.getPlace();
+                var to_address = to_place.formatted_address;
+                $('#destination').val(to_address);
+                 console.log(to_place);
+                console.log(to_address);
+                axios.get('https://maps.googleapis.com/maps/api/geocode/json?',{
+                   params:{
+                   address: to_address
+           } 
+        })
+        .then(function(response){
+            
+            //log for response
+           
+             Desgeometrylat = response.data.results[0].geometry.location.lat;
+             Desgeometrylng = response.data.results[0].geometry.location.lng;
+             //console.log("ami _"+typeof(Desgeometrylat));
+              person.tolat = Desgeometrylat;
+              person.tolong = Desgeometrylng;
+         
+              //console.log("tmi _"+typeof( person.tolong));
+             console.log(Desgeometrylat);
+             console.log(Desgeometrylng);
+               dpos = {
+                lat: Desgeometrylat,
+                lng: Desgeometrylng 
+            };
+            //set Destination marker
+               if (destinationmarker && destinationmarker.setMap) {
+                   destinationmarker.setMap(null);
+                     }  
+                   destinationmarker = new google.maps.Marker({
+                    position: dpos,
+                    map: map,
+                    title:to_address,
+                    animation: google.maps.Animation.DROP,
+                    icon: image3
+            });
+            
+              })
+   
+            });
+            
+             person.tolat = Desgeometrylat;
+             person.tolong = Desgeometrylng;
+              
+             
+           
+            
+             //console.log(destinationAdresss);
+             //console.log(pos.lat+","+pos.lng);
+            
+            // find current location 
+        axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+pos.lat+','+pos.lng,{
+         
+        }).then(function(response){
+            
+              console.log(response);
+              FromAddress = response.data.results[1].formatted_address;
+              //console.log(FromAddress);
+              $('#origin').val(FromAddress);
+              
+             console.log(FromAddress);
+            
+        }) ;
+        
+        
+        // draw & calculate route
+        function calculateRoute(directionsService, directionsDisplay){
+            person.origin = origin;
+            person.destination = destination;
+             
+             
+                 directionsDisplay.setMap(map);
+              
+               var request = {
+                        origin: person.origin,
+                        destination:person.destination,
+                        travelMode: 'DRIVING'
+                      };
+              
+               directionsService.route(request, function(response, status) {
+                    if (status == 'OK') {
+                        
+                          directionsDisplay.setDirections(response);
+                          directionsDisplay.setOptions( { suppressMarkers: true } );
+                          var center_point = response.routes[0].overview_path.length/2;
+                          infowindowRoute.setContent(distance_in_kilo+ " km<br>" +duration_text + " ");
+                          infowindowRoute.setPosition(response.routes[0].overview_path[center_point|0]);
+                          infowindowRoute.open(map);
+                    }
+                  });
+            
+        }
+        
+            
+              
+              
+        
+        
+        function calculateDistance() {
+              origin = $('#origin').val();
+             destination = $('#destination').val();
+            var service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix(
+                {
+                    origins: [origin],
+                    destinations: [destination],
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    unitSystem: google.maps.UnitSystem.IMPERIAL, // miles and feet.
+                    // unitSystem: google.maps.UnitSystem.metric, // kilometers and meters.
+                    avoidHighways: false,
+                    avoidTolls: false
+                }, callback);
+        }
+        
+        
+        
+        function callback(response, status) {
+            if (status != google.maps.DistanceMatrixStatus.OK) {
+                 console.log(err);
+            } else {
+                var origin = response.originAddresses[0];
+                var destination = response.destinationAddresses[0];
+                if (response.rows[0].elements[0].status === "ZERO_RESULTS") {
+                    // $('#result').html("Better get on a plane. There are no roads between "  + origin + " and " + destination);
+                    console.log("better way to travel on plane");
+                } else {
+                    var distance = response.rows[0].elements[0].distance;
+                    var duration = response.rows[0].elements[0].duration;
+                    console.log(response.rows[0].elements[0].distance);
+                     distance_in_kilo = distance.value / 1000; // the kilom
+                     distance_in_mile = distance.value / 1609.34; // the mile
+                     duration_text = duration.text;
+                    var duration_value = duration.value;
+                    console.log("duration : "+duration_text);
+                    console.log("distance_in_mile : "+distance_in_kilo);
+                    
+                    person.duration = duration_text
+                    person.distance = distance_in_kilo
+                    updatePerson();
+                }
+            }
+        }
+        // print results on submit the form
+         google.maps.event.addListener(to_places, 'place_changed', function () {
+    
+                  calculateDistance();
+                  directionsService = new google.maps.DirectionsService();
+                 
+                  directionsDisplay.setMap(map);
+                  calculateRoute(directionsService, directionsDisplay);
+                    
+         });
+      
+
+      
+          
+             
+            //console.log("i am here"+person.dlat)
+           
             //infoWindow.setPosition(pos);
     
             //infoWindow.setContent("Your Position");
@@ -93,6 +288,9 @@ function SetMarkerAndLocation()
             //infoWindow.open(map);
     
             //initializing Markers with postions
+    
+            
+            
             var marker = new google.maps.Marker({
                 position: pos,
                 map: map,
@@ -118,10 +316,11 @@ function SetMarkerAndLocation()
             });
     
             //map.panTo(pos);
-            setTimeout("map.setZoom(16)", 2000);
+            setTimeout("map.setZoom(16)",Infinity);
             
             //showing 'Your Location' message early on
             infoWindow.open(map, marker);
+            
     
             //Setting On Click functions to marker for pop information
             marker.addListener('click', function() {
@@ -134,7 +333,7 @@ function SetMarkerAndLocation()
                     infoWindow.open(map, marker);
                 }
             });
-    
+           
             marker2.addListener('click', function() {
                 toggleBounce2();
                 
@@ -158,6 +357,9 @@ function SetMarkerAndLocation()
     
     
             //Adding Animations to markers for bounce
+            
+            
+            
             function toggleBounce() {
                 if (marker.getAnimation() !== null) {
                     marker.setAnimation(null);
@@ -167,6 +369,8 @@ function SetMarkerAndLocation()
                 }
     
             }
+            
+             
     
             function toggleBounce2() {
                 if (marker2.getAnimation() !== null) {
@@ -197,7 +401,7 @@ function SetMarkerAndLocation()
     
     
     
-        }, function() {
+        },function(){
             handleLocationError(true, infoWindow, map.getCenter());
             handleLocationError(true, infoWindow2, pos2);
             handleLocationError(true, infoWindow3, pos3);

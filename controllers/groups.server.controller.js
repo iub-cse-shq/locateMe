@@ -128,3 +128,11 @@ exports.groupByID = function(req, res, next, id) {
       next();
     });
 };
+
+exports.joinByLink = function(req, res) {
+	res.render('./../public/views/group/join.ejs', {
+		user: req.user || null,
+		request: req
+	});
+};
+
