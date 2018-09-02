@@ -1,3 +1,4 @@
+
 function updatePerson() {
  $.ajax({
   method: "PUT",
@@ -89,7 +90,7 @@ function checkLogin() {
 }
 window.fbAsyncInit = function() {
  FB.init({
-  appId: '2485169118373885',
+  appId: '2149396011943546',
   autoLogAppEvents: true,
   status: true,
   xfbml: true,
@@ -101,9 +102,10 @@ window.fbAsyncInit = function() {
  checkLogin();
  FB.Event.subscribe('auth.login', checkLogin);
 
- $('#loginbtn').click(function() {
-  FB.login();
- });
+ // $('#loginbtn').click(function() {
+ //  FB.login();
+ // });
+ 
 
  $('#logoutbtn').click(function() {
   FB.logout();

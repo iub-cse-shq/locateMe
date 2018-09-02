@@ -96,7 +96,7 @@ exports.oauthCallback = function(strategy) {
 			}
 			req.login(user, function(err) {
 				if (err) {
-					return res.redirect('/#!/signin');
+					return res.redirect('/signin');
 				}
 
 				return res.redirect(redirectURL || '/');

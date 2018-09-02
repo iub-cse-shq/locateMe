@@ -14,6 +14,10 @@ function closean(event) {
     document.getElementById("LockGPSBtn").style.visibility = "visible";
 }
 
+
+
+
+
 //for GroupOverlay
 
 function openGrpOvrly(event) {
@@ -23,6 +27,8 @@ function openGrpOvrly(event) {
     
     createGroupTable();
 }
+
+
 
 function closeGrpOvrly(event) {
     document.getElementById("groupOverlay").style.width = "0%";

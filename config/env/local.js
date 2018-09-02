@@ -4,11 +4,12 @@
 // will not get commited and pushed to remote repositories.
 // Use it for your API keys, passwords, etc.
 
-/* For example:
+/* For example:*/
 
 module.exports = {
 	db: {
-		uri: 'mongodb://localhost/local-dev',
+		//uri: 'mongodb://localhost/local-dev',
+		uri: 'localhost:27017/local-dev',
 		options: {
 			user: '',
 			pass: ''
@@ -20,4 +21,4 @@ module.exports = {
 		callbackURL: '/auth/facebook/callback'
 	}
 };
-*/
+

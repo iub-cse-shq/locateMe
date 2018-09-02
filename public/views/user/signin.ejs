@@ -1,7 +1,7 @@
 <!DOCTYPE html5>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>Hello!</title>
+    <title>signin</title>
     <!-- General META -->
     <meta charset="utf-8">
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
@@ -43,3 +43,27 @@
     });
   </script>
 </html>
+
+
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '{2149396011943546}',
+      cookie     : true,
+      xfbml      : true,
+      version    : '{v3.0}'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>

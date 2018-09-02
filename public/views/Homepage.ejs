@@ -24,14 +24,14 @@
     };
     </script>
     
-    <script src="/JS/navbar.js"> </script>
-    <script src="/JS/facebook.js"> </script>
-    <script src="/JS/map.js"> </script>
+    
     
     <link rel="shortcut icon" type="image/x-icon" href="/Images/earthico.ico" />
 
 
     <title>LocateMe!</title>
+    
+    
 
 </head>
 
@@ -64,11 +64,15 @@
                 
                 
                 
-                <button id="loginbtn" class="btn btn-outline-success btn-md" type="button">Log In</button>
+                <button id="loginbtn" class="btn btn-outline-success btn-md" type="button" onclick="FB.login()">Log In</button>
                  
                 <div id="logged-in" style="display: none">
                     <button id="Group" type="Button" class="btn btn-info btn-md" title="Show Groups" onclick="openGrpOvrly(event)">
                         <i class="material-icons">group</i>
+                    </button>
+                    <button id="GroupChat" type="Button" class="btn btn-info btn-md " 
+                    title="Group Chat" onclick="openChat(event)" style="display: none">
+                            <i class="material-icons">chat</i>
                     </button>
                     <img id="pp" src="" height="32px" />
                     <button id="logoutbtn" class="btn btn-outline-success btn-md" type="button" onclick="FB.logout()">Log Out</button>
@@ -97,9 +101,32 @@
 
     </div>
     
+    <!-- The login OverLay -->
+    
+    
+        <!-- The chat OverLay -->
+    <div id="chatOverlay" class="overlay">
+
+        <!-- Button to close the overlay navigation -->
+        <a href="javascript:void(0)" class="closebtn btn btn-danger" onclick="closeChat(event)">&times;</a>
+
+        <!-- Overlay content -->
+        <div class="overlay-content">
+            <div id="chat-window">
+                <div id="output" class='text-white'></div>
+                <div id="feedback" class='text-white'></div>
+            </div>
+            <input id="handle" type="text" placeholder="Handle" />
+            <input id="message" type="text" placeholder="Message" />
+            <button id="send">Send</button>
+        </div>
+
+    </div>
+    
     <!--Group View Overlay-->
      <div id="groupOverlay" class="overlay">
-                <a href="javascript:void(0)" class="closebtn btn btn-danger" onclick="closeGrpOvrly(event)">&times;</a>
+                <a href="javascript:void(0)" class="closebtn btn btn-danger" 
+                onclick="closeGrpOvrly(event)">&times;</a>
                 
         <div class="overlay-content">
                     <!--<div class="container-fluid text-center">-->
@@ -120,16 +147,18 @@
                   </div>
                                 
                   <div class="col-md-2">
-                    <button id="addGroup" style="background-color:rgb(30, 31, 33);" type="submit" class="btn btn-primary" onclick="showAddGroup(event)">
+                    <button id="addGroup" style="background-color:rgb(30, 31, 33);" 
+                    type="submit" class="btn btn-primary" onclick="showAddGroup(event)">
                           <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Group
                     </button>
                   </div>
                   <div class="col-md-4">
-                    <button id="joinGroup" style="background:rgb(30, 31, 33);" type="submit" class="btn btn-primary" onclick="addGroup(event)">
+                    <button id="joinGroup" style="background:rgb(30, 31, 33);" type="submit" 
+                    class="btn btn-primary" onclick="addGroup(event)">
                           <i class="fa fa-users" aria-hidden="true"></i> Join Group
                     </button>
                   </div>
-              </div>
+                </div>
                 
                                                                  
                  
@@ -246,9 +275,18 @@
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMcCpQD49UcLD5TwjXSjsY3k4QzduPXlE&callback=initMap" async defer></script>
     
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    
     <script src="/JS/share.js"> </script>
     
     <script src="/JS/group.js"> </script>
+    <script src="/JS/navbar.js"> </script>
+    
+    <script src="/JS/facebook.js"> </script>
+    <script src="/JS/map.js"> </script>
+    <script src="/JS/chat.js"> </script>
     
     
     

@@ -15,12 +15,18 @@ function createGroupTable(){
                 '<th scope="row">'+(i+1)+'</th>'+
                 '<td>'+g.name+'</td>'+
                 '<td>'+
-                '<button type="button" class="btn btn-info mr-1" onclick="copyLink('+i+')"><i class="fa fa-clipboard" aria-hidden="true"></i>Copy Invite Code</button>'+
+                '<button type="button" class="btn btn-info mr-1" onclick="copyLink('+i+')">'+
+                '<i class="fa fa-clipboard" aria-hidden="true"></i>Copy Invite Code</button>'+
                 '<input style="display:none" type="text" id="group-link-'+i+'" value="'+g._id+'" >'+
-                '<button type="button" class="btn btn-primary" onclick="viewGroup('+i+')"><i class="fa fa-eye" aria-hidden="true"></i>View Group</button></td>'+
+                '<button type="button" class="btn btn-primary" onclick="viewGroup('+i+')">'+
+                '<i class="fa fa-eye" aria-hidden="true"></i>View Group</button></td>'+
                 '</tr>';
     });
     $('#groupTable').html(rows);
+}
+
+function showChatBtn(event){
+    $("#GroupChat").show();
 }
 
 function viewGroup(i){
@@ -37,6 +43,7 @@ function viewGroup(i){
         var group = res;
         console.log(res);
         initMap();
+        showChatBtn();
         $.each(group.persons, function(i,p){
             console.log(p);
             //FB.api(
