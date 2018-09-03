@@ -3,7 +3,7 @@
 /* global group.tolat  */
 /* global group.tolong*/
 /* global group.destination */
-var group=0;
+ 
 var map, infoWindow,infoWindowTo,infoWindow2, infoWindow3,destinationAdresss,FromAddress,originAddress,to_address,origin,destination,directionsService,directionsDisplay,distance_in_kilo,distance_in_mile,duration_text;
 var pos, pos2, pos3,dpos;
 var marker, marker2, marker3,destinationmarker;
@@ -89,8 +89,8 @@ directionsDisplay.setOptions({
     infowindowRoute = new google.maps.InfoWindow();
     
     //var searchBox = new google.maps.places.Autocomplete(document.getElementById('Search-input'));
-     
-     setDestionalPlaceChanged();
+     //setDestionalPlaceChanged();
+    
   
     
 }
@@ -115,8 +115,8 @@ function SetMarkerAndLocation()
            person.long = pos.lng;
            person.lat = pos.lat;
            
-
-             
+   setDestionalPlaceChanged();
+       
             //console.log("i am here"+person.dlat)
            
             //infoWindow.setPosition(pos);
@@ -127,7 +127,7 @@ function SetMarkerAndLocation()
             //infoWindow.open(map);
     
             //initializing Markers with postions
-    
+            
             
             
             var marker = new google.maps.Marker({

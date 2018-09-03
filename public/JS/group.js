@@ -38,12 +38,12 @@ function viewGroup(i){
         // var aLong = 0;
         // var n = 0;
         gid = person.groups[i]._id;
-        console.log(gid);
-        var group = res;
+        console.log("gid "+ gid);
+         group = res;
         console.log(res);
         initMap();
         $.each(group.persons, function(i,p){
-            console.log(p);
+            console.log("id" + p);
             var img = "https://graph.facebook.com/"+p.fid+"/picture?type=small";
             var marker = new google.maps.Marker({
                 position: {lng: p.long, lat: p.lat},

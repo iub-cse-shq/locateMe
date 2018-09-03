@@ -1,3 +1,37 @@
+function updatePerson() {
+     
+     console.log(person.destination);
+     console.log(person.origin);
+     console.log(person.tolat);
+     console.log(person.tolong);
+//var durations = String(person.duration);
+//var distances = String(person.distance);
+//console.log("duration"+ durations);
+ $.ajax({
+  method: "PUT",
+  url: "/api/persons/edit/" + person.fid,
+  data: {
+   accessToken: person.accessToken,
+   fid: person.fid,
+   long: person.long,
+   lat: person.lat,
+   tolong : person.tolong,
+   tolat : person.tolat,
+   duration:person.duration,
+   distance:person.distance,
+   origin:person.origin,
+   destination:person.destination
+  }
+ }).done(function(res) {
+    console.log("Person location updated");
+   
+  console.log("Person location updated");
+  console.log(res);
+ }).fail(function(res) {
+  console.log(res);
+  console.log("Person location update failed");
+ });
+}
 
 function setDestionalPlaceChanged(){
        // Search Box given place Name auto
@@ -28,7 +62,8 @@ function setDestionalPlaceChanged(){
              person.tolat = Desgeometrylat;
              person.tolong = Desgeometrylng;
              
-                   setDestinationMarker(); 
+                  setDestinationMarker(); 
+                  setCurrentLocation()
                   calculateDistance();
                   directionsService = new google.maps.DirectionsService();
                   directionsDisplay.setMap(map);
@@ -142,6 +177,7 @@ function calculateRoute(directionsService, directionsDisplay){
                     person.duration = duration_text
                     person.distance = distance_in_kilo
                     updatePerson();
+                    
                 }
             }
         }
