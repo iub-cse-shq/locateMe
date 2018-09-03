@@ -10,6 +10,16 @@
     margin-top:50px;
 }
 
+.output1{
+    display: flex;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.pp{
+    height: 30px;
+    width: 30px;
+}
+
 /*#sharediv {*/
 /*	background-color: transparent;*/
 /*	width: 150px;*/

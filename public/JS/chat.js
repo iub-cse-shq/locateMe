@@ -28,7 +28,7 @@ var message = document.getElementById('message'),
 btn.addEventListener('click', function(){
     socket.emit('chat', {
         message: message.value,
-        name: person.name
+        user:person
     });
     console.log(message.value);
     message.value = "";
@@ -43,7 +43,9 @@ message.addEventListener('keypress', function(){
 // Listen for events
 socket.on('chat', function(data){
     feedback.innerHTML = '';
-    output.innerHTML += '<h3><strong>' + data.name + ': </strong>' + data.message + '</h3>';
+    var img = "https://graph.facebook.com/"+data.user.fid+"/picture?type=small";
+    output.innerHTML += '<div class="output1"><img src='+img+' class="pp"> </img>' 
+    + '<h5>'+' -  '+ data.message + '</h5></div>';
 });
 
 socket.on('typing', function(data){
